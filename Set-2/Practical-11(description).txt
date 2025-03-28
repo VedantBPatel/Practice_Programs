@@ -1,0 +1,205 @@
+1. Classes and Objects
+The program uses three classes—Customer, BankAccount, and Bank—to organize responsibilities:
+
+Customer Class:
+Represents a bank customer, storing their:
+
+Name
+
+Address
+
+Contact
+
+A list of bank accounts they own (self.accounts).
+
+Key Methods:
+
+create_acc: Creates a new account for the customer and appends it to the accounts list.
+
+display_info: Prints the customer's details and the details of all their accounts.
+
+BankAccount Class:
+Represents an individual account, storing:
+
+Account type (e.g., Savings or Current).
+
+Balance.
+
+Account number.
+
+Key Methods:
+
+deposit: Adds money to the account's balance.
+
+withdraw: Deducts money from the balance if funds are sufficient.
+
+__str__: Provides a string representation of the account for easy printing.
+
+Bank Class:
+Represents the bank, storing:
+
+Bank name.
+
+A list of all customers.
+
+Key Methods:
+
+add_customer: Adds a new customer to the customers list.
+
+generate_acc_num: A static method that generates an 8-digit random account number.
+
+display_info: Displays details of all the customers and their accounts.
+
+find_acc: Searches for an account based on the account number.
+
+
+Flow with Code & Explanation
+1. Starting from main()
+python
+bank = Bank("Tech Bank")
+Who is created?:
+
+A Bank instance (bank) is initialized with the name "Tech Bank."
+
+Internally:
+
+self.customers = [] creates an empty list to store all customers.
+
+Why?:
+
+This Bank object will keep track of all customers and accounts.
+
+2. Selecting Option 1 (New Customer)
+python
+name = input("Enter Customer Name: ")
+address = input("Enter Customer Address: ")
+contact = input("Enter Customer Contact: ")
+customer = Customer(name, address, contact)
+Who is created?:
+
+A new Customer object (customer) is initialized with name, address, and contact.
+
+Internally:
+
+self.accounts = [] is created as an empty list to store this customer's accounts.
+
+python
+bank.add_customer(customer)
+Who is called?:
+
+The add_customer() method in the Bank class.
+
+What happens?:
+
+The customer object is appended to the bank’s customers list.
+
+3. Creating an Account for the Customer
+python
+acc_type = input("Enter Account Type (Savings/Current): ")
+initial_balance = float(input("Enter Initial Balance: "))
+customer.create_acc(acc_type, initial_balance)
+Who is called?:
+
+create_acc() in the Customer class.
+
+What happens inside create_acc()?:
+
+A new account number is generated:
+
+python
+account_number = Bank.generate_acc_num()
+Who generates it?:
+
+Bank.generate_acc_num() is called to generate an 8-digit unique number using random.choices.
+
+A BankAccount object is created:
+
+python
+account = BankAccount(acc_type, initial_balance, account_number)
+What happens?:
+
+The BankAccount constructor stores the account details:
+
+self.acc_type = acc_type
+
+self.balance = initial_balance
+
+self.acc_number = account_number
+
+The __str__ method allows easy printing of account details.
+
+The account is added to the customer’s accounts list:
+
+python
+self.accounts.append(account)
+Outcome:
+
+The customer now owns an account, which is stored in their accounts list.
+
+4. Selecting Option 2 (Existing Customer)
+python
+account_number = input("Enter Your Account Number: ")
+account = bank.find_acc(account_number)
+Who is called?:
+
+find_acc() in the Bank class.
+
+What happens inside find_acc()?:
+
+The program loops through the bank’s customers list.
+
+For each customer, it checks their accounts list to find the matching account:
+
+python
+if account.acc_number == account_number:
+    return account
+If found, the BankAccount object is returned.
+
+5. Actions for an Existing Customer
+Once the account is found, the submenu options (Deposit, Withdraw, etc.) can be performed.
+
+Case: Deposit
+
+python
+amount = float(input("Enter Amount to Deposit: "))
+account.deposit(amount)
+Who is called?:
+
+deposit() in the BankAccount class.
+
+What happens inside deposit()?:
+
+The balance is updated:
+
+python
+self.balance += amount
+Case: Withdraw
+
+python
+amount = float(input("Enter Amount to Withdraw: "))
+account.withdraw(amount)
+Who is called?:
+
+withdraw() in the BankAccount class.
+
+What happens inside withdraw()?:
+
+If sufficient balance:
+
+python
+self.balance -= amount
+Otherwise, a warning is displayed.
+
+Case: Display Account Info
+
+python
+print(account)
+Who is called?:
+
+The __str__ method of BankAccount.
+
+What happens?:
+
+A string representation of the account is returned, showing:
+
+Type: Savings, Account No: 12345678, Balance: ₹50000
