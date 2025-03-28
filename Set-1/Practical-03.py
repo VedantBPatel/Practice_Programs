@@ -8,3 +8,4 @@ def generate_password():
     print(f"Generated Password is: {password}\n")
 generate_password()
 
+
